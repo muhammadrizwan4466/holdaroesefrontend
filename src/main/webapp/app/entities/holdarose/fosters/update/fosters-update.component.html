@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="gx-r-fosters-heading"
+        data-cy="FostersCreateUpdateHeading"
+        gxRTranslate="holdaroesefrontendApp.holdaroseFosters.home.createOrEditLabel"
+      >
+        Create or edit a Fosters
+      </h2>
+
+      <div>
+        <gx-r-alert-error></gx-r-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" gxRTranslate="global.field.id" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseFosters.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseFosters.cnic" for="field_cnic">Cnic</label>
+          <input type="text" class="form-control" name="cnic" id="field_cnic" data-cy="cnic" formControlName="cnic" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseFosters.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseFosters.jobTitle" for="field_jobTitle">Job Title</label>
+          <input type="text" class="form-control" name="jobTitle" id="field_jobTitle" data-cy="jobTitle" formControlName="jobTitle" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseFosters.location" for="field_location">Location</label>
+          <input type="text" class="form-control" name="location" id="field_location" data-cy="location" formControlName="location" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseFosters.child" for="field_child">Child</label>
+          <select class="form-control" id="field_child" data-cy="child" name="child" formControlName="child">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="childOption.id === editForm.get('child')!.value?.id ? editForm.get('child')!.value : childOption"
+              *ngFor="let childOption of childrenSharedCollection; trackBy: trackChildById"
+            >
+              {{ childOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span gxRTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span gxRTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

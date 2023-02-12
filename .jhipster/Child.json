@@ -1,0 +1,57 @@
+{
+  "applications": ["holdaroesefrontend", "holdarose"],
+  "changelogDate": "20230205053959",
+  "clientRootFolder": "holdarose",
+  "databaseType": "mongodb",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "child",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValues": "MALE,FEMALE,OTHER"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "holdarose",
+  "name": "Child",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "fosters",
+      "otherEntityRelationshipName": "child",
+      "relationshipName": "fosters",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "adoptionRequest",
+      "otherEntityRelationshipName": "child",
+      "ownerSide": false,
+      "relationshipName": "adoptionRequest",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "foundation",
+      "otherEntityRelationshipName": "child",
+      "relationshipName": "foundation",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

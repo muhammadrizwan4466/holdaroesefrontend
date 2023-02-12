@@ -1,0 +1,33 @@
+{
+  "holdaroesefrontendApp": {
+    "holdaroseFoundation": {
+      "home": {
+        "title": "Foundations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Foundation",
+        "createOrEditLabel": "Create or edit a Foundation",
+        "notFound": "No Foundations found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Foundation {{ id }}?"
+      },
+      "detail": {
+        "title": "Foundation"
+      },
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "description": "Description",
+      "location": "Location",
+      "donation": "Donation",
+      "child": "Child"
+    }
+  },
+  "holdaroseApp": {
+    "holdaroseFoundation": {
+      "created": "A new Foundation is created with identifier {{ param }}",
+      "updated": "A Foundation is updated with identifier {{ param }}",
+      "deleted": "A Foundation is deleted with identifier {{ param }}"
+    }
+  }
+}

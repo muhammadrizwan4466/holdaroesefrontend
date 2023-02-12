@@ -1,0 +1,108 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="gx-r-child-heading"
+        data-cy="ChildCreateUpdateHeading"
+        gxRTranslate="holdaroesefrontendApp.holdaroseChild.home.createOrEditLabel"
+      >
+        Create or edit a Child
+      </h2>
+
+      <div>
+        <gx-r-alert-error></gx-r-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" gxRTranslate="global.field.id" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.age" for="field_age">Age</label>
+          <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.image" for="field_image">Image</label>
+          <div>
+            <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('image')!.value, editForm.get('imageContentType')!.value)"
+                gxRTranslate="entity.action.open"
+                >open</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ image: null }); editForm.patchValue({ imageContentType: null })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_image"
+              data-cy="image"
+              (change)="setFileData($event, 'image', false)"
+              gxRTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.gender" for="field_gender">Gender</label>
+          <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null">{{ 'holdaroesefrontendApp.Gender.null' | translate }}</option>
+            <option *ngFor="let gender of genderValues" [value]="gender">{{ 'holdaroesefrontendApp.Gender.' + gender | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.foundation" for="field_foundation">Foundation</label>
+          <select class="form-control" id="field_foundation" data-cy="foundation" name="foundation" formControlName="foundation">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                foundationOption.name === editForm.get('foundation')!.value?.name ? editForm.get('foundation')!.value : foundationOption
+              "
+              *ngFor="let foundationOption of foundationsSharedCollection; trackBy: trackFoundationById"
+            >
+              {{ foundationOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span gxRTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span gxRTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

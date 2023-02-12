@@ -1,0 +1,33 @@
+{
+  "holdaroesefrontendApp": {
+    "holdaroseFosters": {
+      "home": {
+        "title": "Fosters",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Fosters",
+        "createOrEditLabel": "Create or edit a Fosters",
+        "notFound": "No Fosters found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Fosters {{ id }}?"
+      },
+      "detail": {
+        "title": "Fosters"
+      },
+      "id": "ID",
+      "name": "Name",
+      "cnic": "Cnic",
+      "email": "Email",
+      "jobTitle": "Job Title",
+      "location": "Location",
+      "child": "Child"
+    }
+  },
+  "holdaroseApp": {
+    "holdaroseFosters": {
+      "created": "A new Fosters is created with identifier {{ param }}",
+      "updated": "A Fosters is updated with identifier {{ param }}",
+      "deleted": "A Fosters is deleted with identifier {{ param }}"
+    }
+  }
+}

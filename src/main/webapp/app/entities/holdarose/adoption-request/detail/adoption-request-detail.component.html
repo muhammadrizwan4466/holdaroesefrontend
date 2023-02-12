@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="adoptionRequest">
+      <h2 data-cy="adoptionRequestDetailsHeading">
+        <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.detail.title">Adoption Request</span>
+      </h2>
+
+      <hr />
+
+      <gx-r-alert-error></gx-r-alert-error>
+
+      <gx-r-alert></gx-r-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span gxRTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.id }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.childName">Child Name</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.childName }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.cnic">Cnic</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.cnic }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterName">Foster Name</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.fosterName }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterJobTitle">Foster Job Title</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.fosterJobTitle }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterAddress">Foster Address</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.fosterAddress }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.approved">Approved</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.approved }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.foundationName">Foundation Name</span></dt>
+        <dd>
+          <span>{{ adoptionRequest.foundationName }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.child">Child</span></dt>
+        <dd>
+          <div *ngIf="adoptionRequest.child">
+            <a [routerLink]="['/child', adoptionRequest.child?.id, 'view']">{{ adoptionRequest.child?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span gxRTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/adoption-request', adoptionRequest.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span gxRTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="gx-r-donation-heading"
+        data-cy="DonationCreateUpdateHeading"
+        gxRTranslate="holdaroesefrontendApp.holdaroseDonation.home.createOrEditLabel"
+      >
+        Create or edit a Donation
+      </h2>
+
+      <div>
+        <gx-r-alert-error></gx-r-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" gxRTranslate="global.field.id" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseDonation.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseDonation.cnic" for="field_cnic">Cnic</label>
+          <input type="text" class="form-control" name="cnic" id="field_cnic" data-cy="cnic" formControlName="cnic" />
+          <div *ngIf="editForm.get('cnic')!.invalid && (editForm.get('cnic')!.dirty || editForm.get('cnic')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('cnic')?.errors?.required" gxRTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseDonation.address" for="field_address">Address</label>
+          <input type="text" class="form-control" name="address" id="field_address" data-cy="address" formControlName="address" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseDonation.foundationName" for="field_foundationName"
+            >Foundation Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="foundationName"
+            id="field_foundationName"
+            data-cy="foundationName"
+            formControlName="foundationName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseDonation.donationAmount" for="field_donationAmount"
+            >Donation Amount</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="donationAmount"
+            id="field_donationAmount"
+            data-cy="donationAmount"
+            formControlName="donationAmount"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseDonation.paymentMethod" for="field_paymentMethod"
+            >Payment Method</label
+          >
+          <select
+            class="form-control"
+            name="paymentMethod"
+            formControlName="paymentMethod"
+            id="field_paymentMethod"
+            data-cy="paymentMethod"
+          >
+            <option [ngValue]="null">{{ 'holdaroesefrontendApp.PaymentMethod.null' | translate }}</option>
+            <option *ngFor="let paymentMethod of paymentMethodValues" [value]="paymentMethod">
+              {{ 'holdaroesefrontendApp.PaymentMethod.' + paymentMethod | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseDonation.foundation" for="field_foundation"
+            >Foundation</label
+          >
+          <select class="form-control" id="field_foundation" data-cy="foundation" name="foundation" formControlName="foundation">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                foundationOption.id === editForm.get('foundation')!.value?.id ? editForm.get('foundation')!.value : foundationOption
+              "
+              *ngFor="let foundationOption of foundationsSharedCollection; trackBy: trackFoundationById"
+            >
+              {{ foundationOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span gxRTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span gxRTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

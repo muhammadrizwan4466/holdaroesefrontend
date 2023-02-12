@@ -1,0 +1,35 @@
+{
+  "holdaroesefrontendApp": {
+    "holdaroseAdoptionRequest": {
+      "home": {
+        "title": "Adoption Requests",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Adoption Request",
+        "createOrEditLabel": "Create or edit a Adoption Request",
+        "notFound": "No Adoption Requests found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Adoption Request {{ id }}?"
+      },
+      "detail": {
+        "title": "Adoption Request"
+      },
+      "id": "ID",
+      "childName": "Child Name",
+      "cnic": "Cnic",
+      "fosterName": "Foster Name",
+      "fosterJobTitle": "Foster Job Title",
+      "fosterAddress": "Foster Address",
+      "approved": "Approved",
+      "foundationName": "Foundation Name",
+      "child": "Child"
+    }
+  },
+  "holdaroseApp": {
+    "holdaroseAdoptionRequest": {
+      "created": "A new Adoption Request is created with identifier {{ param }}",
+      "updated": "A Adoption Request is updated with identifier {{ param }}",
+      "deleted": "A Adoption Request is deleted with identifier {{ param }}"
+    }
+  }
+}

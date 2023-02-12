@@ -1,0 +1,153 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="gx-r-adoption-request-heading"
+        data-cy="AdoptionRequestCreateUpdateHeading"
+        gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.home.createOrEditLabel"
+      >
+        Create or edit a Adoption Request
+      </h2>
+
+      <div>
+        <gx-r-alert-error></gx-r-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" gxRTranslate="global.field.id" for="field_id">ID</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.childName" for="field_childName"
+            >Child Name</label
+          >
+          <input type="text" class="form-control" name="childName" id="field_childName" data-cy="childName" formControlName="childName" />
+          <div *ngIf="editForm.get('childName')!.invalid && (editForm.get('childName')!.dirty || editForm.get('childName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('childName')?.errors?.required"
+              gxRTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.cnic" for="field_cnic">Cnic</label>
+          <input type="text" class="form-control" name="cnic" id="field_cnic" data-cy="cnic" formControlName="cnic" />
+          <div *ngIf="editForm.get('cnic')!.invalid && (editForm.get('cnic')!.dirty || editForm.get('cnic')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('cnic')?.errors?.required" gxRTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterName" for="field_fosterName"
+            >Foster Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="fosterName"
+            id="field_fosterName"
+            data-cy="fosterName"
+            formControlName="fosterName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterJobTitle" for="field_fosterJobTitle"
+            >Foster Job Title</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="fosterJobTitle"
+            id="field_fosterJobTitle"
+            data-cy="fosterJobTitle"
+            formControlName="fosterJobTitle"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterAddress" for="field_fosterAddress"
+            >Foster Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="fosterAddress"
+            id="field_fosterAddress"
+            data-cy="fosterAddress"
+            formControlName="fosterAddress"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.approved" for="field_approved"
+            >Approved</label
+          >
+          <input type="checkbox" class="form-check" name="approved" id="field_approved" data-cy="approved" formControlName="approved" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.foundationName" for="field_foundationName"
+            >Foundation Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="foundationName"
+            id="field_foundationName"
+            data-cy="foundationName"
+            formControlName="foundationName"
+          />
+          <div
+            *ngIf="
+              editForm.get('foundationName')!.invalid && (editForm.get('foundationName')!.dirty || editForm.get('foundationName')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('foundationName')?.errors?.required"
+              gxRTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.child" for="field_child">Child</label>
+          <select class="form-control" id="field_child" data-cy="child" name="child" formControlName="child">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="childOption.id === editForm.get('child')!.value?.id ? editForm.get('child')!.value : childOption"
+              *ngFor="let childOption of childrenCollection; trackBy: trackChildById"
+            >
+              {{ childOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span gxRTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span gxRTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

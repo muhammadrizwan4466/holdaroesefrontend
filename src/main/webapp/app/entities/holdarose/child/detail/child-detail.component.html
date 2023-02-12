@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="child">
+      <h2 data-cy="childDetailsHeading"><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.detail.title">Child</span></h2>
+
+      <hr />
+
+      <gx-r-alert-error></gx-r-alert-error>
+
+      <gx-r-alert></gx-r-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span gxRTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ child.id }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.name">Name</span></dt>
+        <dd>
+          <span>{{ child.name }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.age">Age</span></dt>
+        <dd>
+          <span>{{ child.age }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.image">Image</span></dt>
+        <dd>
+          <div *ngIf="child.image">
+            <a (click)="openFile(child.image, child.imageContentType)" gxRTranslate="entity.action.open">open</a>
+            {{ child.imageContentType }}, {{ byteSize(child.image) }}
+          </div>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.gender">Gender</span></dt>
+        <dd>
+          <span gxRTranslate="{{ 'holdaroesefrontendApp.Gender.' + child.gender }}">{{ child.gender }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.foundation">Foundation</span></dt>
+        <dd>
+          <div *ngIf="child.foundation">
+            <a [routerLink]="['/foundation', child.foundation?.id, 'view']">{{ child.foundation?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span gxRTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="button" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span gxRTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

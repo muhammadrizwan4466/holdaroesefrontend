@@ -1,0 +1,129 @@
+<div>
+  <h2 id="page-heading" data-cy="AdoptionRequestHeading">
+    <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.home.title">Adoption Requests</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.home.refreshListLabel">Refresh List</span>
+      </button>
+    </div>
+  </h2>
+
+  <gx-r-alert-error></gx-r-alert-error>
+
+  <gx-r-alert></gx-r-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="adoptionRequests?.length === 0">
+    <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.home.notFound">No adoptionRequests found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="adoptionRequests && adoptionRequests.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr gxRSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" gxRSortBy="id"><span gxRTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" gxRSortBy="childName">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.childName">Child Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="cnic">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.cnic">Cnic</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="fosterName">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterName">Foster Name</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="fosterJobTitle">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterJobTitle">Foster Job Title</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="fosterAddress">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.fosterAddress">Foster Address</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="approved">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.approved">Approved</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="foundationName">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.foundationName">Foundation Name</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="child.id">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.child">Child</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let adoptionRequest of adoptionRequests; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/adoption-request', adoptionRequest.id, 'view']">{{ adoptionRequest.id }}</a>
+          </td>
+          <td>{{ adoptionRequest.childName }}</td>
+          <td>{{ adoptionRequest.cnic }}</td>
+          <td>{{ adoptionRequest.fosterName }}</td>
+          <td>{{ adoptionRequest.fosterJobTitle }}</td>
+          <td>{{ adoptionRequest.fosterAddress }}</td>
+          <td>{{ adoptionRequest.approved }}</td>
+          <td>{{ adoptionRequest.foundationName }}</td>
+          <td>
+            <div *ngIf="adoptionRequest.child">
+              <a [routerLink]="['/child', adoptionRequest.child?.id, 'view']">{{ adoptionRequest.child?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/adoption-request', adoptionRequest.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+                (click)="acceptRequest(adoptionRequest.id)"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.accept">Accept</span>
+              </button>
+
+              <button
+                type="submit"
+                (click)="delete(adoptionRequest)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline"
+                      gxRTranslate="entity.action.reject">Reject</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="adoptionRequests && adoptionRequests.length > 0">
+    <div class="d-flex justify-content-center">
+      <gx-r-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></gx-r-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div>
+  <h2 id="page-heading" data-cy="FostersHeading">
+    <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.home.title">Fosters</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-fosters"
+        [routerLink]="['/fosters/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.home.createLabel"> Create a new Fosters </span>
+      </button>
+    </div>
+  </h2>
+
+  <gx-r-alert-error></gx-r-alert-error>
+
+  <gx-r-alert></gx-r-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="fosters?.length === 0">
+    <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.home.notFound">No fosters found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="fosters && fosters.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr gxRSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" gxRSortBy="id"><span gxRTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" gxRSortBy="name">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.name">Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="cnic">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.cnic">Cnic</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="email">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.email">Email</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="jobTitle">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.jobTitle">Job Title</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="location">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.location">Location</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="child.id">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.child">Child</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fosters of fosters; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/fosters', fosters.id, 'view']">{{ fosters.id }}</a>
+          </td>
+          <td>{{ fosters.name }}</td>
+          <td>{{ fosters.cnic }}</td>
+          <td>{{ fosters.email }}</td>
+          <td>{{ fosters.jobTitle }}</td>
+          <td>{{ fosters.location }}</td>
+          <td>
+            <div *ngIf="fosters.child">
+              <a [routerLink]="['/child', fosters.child?.id, 'view']">{{ fosters.child?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/fosters', fosters.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/fosters', fosters.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(fosters)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="fosters && fosters.length > 0">
+    <div class="d-flex justify-content-center">
+      <gx-r-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></gx-r-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

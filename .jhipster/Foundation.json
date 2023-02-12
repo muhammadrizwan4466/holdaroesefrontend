@@ -1,0 +1,50 @@
+{
+  "applications": ["holdaroesefrontend", "holdarose"],
+  "changelogDate": "20230205054259",
+  "clientRootFolder": "holdarose",
+  "databaseType": "mongodb",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "foundation",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "holdarose",
+  "name": "Foundation",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "donation",
+      "otherEntityRelationshipName": "foundation",
+      "relationshipName": "donation",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "child",
+      "otherEntityRelationshipName": "foundation",
+      "relationshipName": "child",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

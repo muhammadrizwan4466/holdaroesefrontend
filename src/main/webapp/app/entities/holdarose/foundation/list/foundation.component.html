@@ -1,0 +1,112 @@
+<div>
+  <h2 id="page-heading" data-cy="FoundationHeading">
+    <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.home.title">Foundations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        *gxRHasAnyAuthority="'ROLE_ADMIN'"
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-foundation"
+        [routerLink]="['/foundation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.home.createLabel"> Create a new Foundation </span>
+      </button>
+    </div>
+  </h2>
+
+  <gx-r-alert-error></gx-r-alert-error>
+
+  <gx-r-alert></gx-r-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="foundations?.length === 0">
+    <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.home.notFound">No foundations found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="foundations && foundations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr gxRSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" gxRSortBy="id"><span gxRTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" gxRSortBy="name">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.name">Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="email">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.email">Email</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="description">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.description">Description</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="location">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseFoundation.location">Location</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let foundation of foundations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/foundation', foundation.id, 'view']">{{ foundation.id }}</a>
+          </td>
+          <td>{{ foundation.name }}</td>
+          <td>{{ foundation.email }}</td>
+          <td>{{ foundation.description }}</td>
+          <td>{{ foundation.location }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/foundation', foundation.id, 'view']"
+                [routerLink]="['/foundation', foundation.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/foundation', foundation.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button *gxRHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(foundation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="foundations && foundations.length > 0">
+    <div class="d-flex justify-content-center">
+      <gx-r-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></gx-r-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

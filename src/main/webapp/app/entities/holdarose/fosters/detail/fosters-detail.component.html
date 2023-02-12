@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="fosters">
+      <h2 data-cy="fostersDetailsHeading"><span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.detail.title">Fosters</span></h2>
+
+      <hr />
+
+      <gx-r-alert-error></gx-r-alert-error>
+
+      <gx-r-alert></gx-r-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span gxRTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ fosters.id }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.name">Name</span></dt>
+        <dd>
+          <span>{{ fosters.name }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.cnic">Cnic</span></dt>
+        <dd>
+          <span>{{ fosters.cnic }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.email">Email</span></dt>
+        <dd>
+          <span>{{ fosters.email }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.jobTitle">Job Title</span></dt>
+        <dd>
+          <span>{{ fosters.jobTitle }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.location">Location</span></dt>
+        <dd>
+          <span>{{ fosters.location }}</span>
+        </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseFosters.child">Child</span></dt>
+        <dd>
+          <div *ngIf="fosters.child">
+            <a [routerLink]="['/child', fosters.child?.id, 'view']">{{ fosters.child?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span gxRTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/fosters', fosters.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span gxRTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div>
+  <h2>
+    <span id="metrics-page-heading" gxRTranslate="metrics.title" data-cy="metricsPageHeading">Application Metrics</span>
+
+    <button class="btn btn-primary float-end" (click)="refresh()">
+      <fa-icon icon="sync"></fa-icon> <span gxRTranslate="metrics.refresh.button">Refresh</span>
+    </button>
+  </h2>
+
+  <h3 gxRTranslate="metrics.jvm.title">JVM Metrics</h3>
+
+  <div class="row" *ngIf="metrics && !updatingMetrics">
+    <gx-r-jvm-memory class="col-md-4" [updating]="updatingMetrics" [jvmMemoryMetrics]="metrics.jvm"></gx-r-jvm-memory>
+
+    <gx-r-jvm-threads class="col-md-4" [threads]="threads"></gx-r-jvm-threads>
+
+    <gx-r-metrics-system class="col-md-4" [updating]="updatingMetrics" [systemMetrics]="metrics.processMetrics"></gx-r-metrics-system>
+  </div>
+
+  <gx-r-metrics-garbagecollector
+    *ngIf="metrics && metricsKeyExists('garbageCollector')"
+    [updating]="updatingMetrics"
+    [garbageCollectorMetrics]="metrics.garbageCollector"
+  ></gx-r-metrics-garbagecollector>
+
+  <div class="well well-lg" *ngIf="updatingMetrics" gxRTranslate="metrics.updating">Updating...</div>
+
+  <gx-r-metrics-request
+    *ngIf="metrics && metricsKeyExists('http.server.requests')"
+    [updating]="updatingMetrics"
+    [requestMetrics]="metrics['http.server.requests']"
+  ></gx-r-metrics-request>
+
+  <gx-r-metrics-endpoints-requests
+    *ngIf="metrics && metricsKeyExists('services')"
+    [updating]="updatingMetrics"
+    [endpointsRequestsMetrics]="metrics.services"
+  ></gx-r-metrics-endpoints-requests>
+
+  <gx-r-metrics-cache
+    *ngIf="metrics && metricsKeyExists('cache')"
+    [updating]="updatingMetrics"
+    [cacheMetrics]="metrics.cache"
+  ></gx-r-metrics-cache>
+
+  <gx-r-metrics-datasource
+    *ngIf="metrics && metricsKeyExistsAndObjectNotEmpty('databases')"
+    [updating]="updatingMetrics"
+    [datasourceMetrics]="metrics.databases"
+  ></gx-r-metrics-datasource>
+</div>
