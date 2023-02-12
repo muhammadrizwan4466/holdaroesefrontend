@@ -35,7 +35,7 @@
                 class="pull-start"
                 (click)="openFile(editForm.get('image')!.value, editForm.get('imageContentType')!.value)"
                 gxRTranslate="entity.action.open"
-                >open</a
+              >open</a
               ><br />
               <span class="pull-start">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
               <button
@@ -73,12 +73,20 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ null }}</option>
+            <option *ngFor="let status of statusValues" [value]="status">{{  status }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.foundation" for="field_foundation">Foundation</label>
           <select class="form-control" id="field_foundation" data-cy="foundation" name="foundation" formControlName="foundation">
             <option [ngValue]="null"></option>
             <option
               [ngValue]="
-                foundationOption.name === editForm.get('foundation')!.value?.name ? editForm.get('foundation')!.value : foundationOption
+                foundationOption.id === editForm.get('foundation')!.value?.id ? editForm.get('foundation')!.value : foundationOption
               "
               *ngFor="let foundationOption of foundationsSharedCollection; trackBy: trackFoundationById"
             >
