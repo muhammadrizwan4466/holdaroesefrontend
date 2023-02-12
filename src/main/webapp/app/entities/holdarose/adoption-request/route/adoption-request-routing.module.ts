@@ -6,7 +6,6 @@ import { AdoptionRequestComponent } from '../list/adoption-request.component';
 import { AdoptionRequestDetailComponent } from '../detail/adoption-request-detail.component';
 import { AdoptionRequestUpdateComponent } from '../update/adoption-request-update.component';
 import { AdoptionRequestRoutingResolveService } from './adoption-request-routing-resolve.service';
-import {ChildRoutingResolveService} from "../../child/route/child-routing-resolve.service";
 
 const adoptionRequestRoute: Routes = [
   {
@@ -30,14 +29,6 @@ const adoptionRequestRoute: Routes = [
     component: AdoptionRequestUpdateComponent,
     resolve: {
       adoptionRequest: AdoptionRequestRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'child/:id',
-    component: AdoptionRequestUpdateComponent,
-    resolve: {
-      adoptionRequest: ChildRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },

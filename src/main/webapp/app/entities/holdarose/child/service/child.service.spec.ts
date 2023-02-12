@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { Gender } from 'app/entities/enumerations/gender.model';
+import { Status } from 'app/entities/enumerations/status.model';
 import { IChild, Child } from '../child.model';
 
 import { ChildService } from './child.service';
@@ -27,6 +28,7 @@ describe('Child Service', () => {
       imageContentType: 'image/png',
       image: 'AAAAAAA',
       gender: Gender.MALE,
+      status: Status.AVAILABE,
     };
   });
 
@@ -66,6 +68,7 @@ describe('Child Service', () => {
           age: 1,
           image: 'BBBBBB',
           gender: 'BBBBBB',
+          status: 'BBBBBB',
         },
         elemDefault
       );
@@ -108,6 +111,7 @@ describe('Child Service', () => {
           age: 1,
           image: 'BBBBBB',
           gender: 'BBBBBB',
+          status: 'BBBBBB',
         },
         elemDefault
       );
@@ -159,7 +163,7 @@ describe('Child Service', () => {
       });
 
       it('should add only unique Child to an array', () => {
-        const childArray: IChild[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '10c66fe8-3149-4852-b181-84d03c619cbd' }];
+        const childArray: IChild[] = [{ id: 'ABC' }, { id: 'CBA' }, { id: '0c66fe83-1498-4527-9818-4d03c619cbdb' }];
         const childCollection: IChild[] = [{ id: 'ABC' }];
         expectedResult = service.addChildToCollectionIfMissing(childCollection, ...childArray);
         expect(expectedResult).toHaveLength(3);

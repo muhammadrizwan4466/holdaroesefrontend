@@ -1,0 +1,10 @@
+{
+  "holdaroesefrontendApp": {
+    "Status": {
+      "null": "",
+      "AVAILABE": "AVAILABE",
+      "OCCUPIED": "OCCUPIED",
+      "ADDOPTED": "ADDOPTED"
+    }
+  }
+}

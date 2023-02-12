@@ -9,7 +9,6 @@
       </button>
 
       <button
-        *gxRHasAnyAuthority="'ROLE_ADMIN'"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-foundation"
@@ -63,7 +62,6 @@
               <button
                 type="submit"
                 [routerLink]="['/foundation', foundation.id, 'view']"
-                [routerLink]="['/foundation', foundation.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >
@@ -81,7 +79,7 @@
                 <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button *gxRHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(foundation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(foundation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
               </button>

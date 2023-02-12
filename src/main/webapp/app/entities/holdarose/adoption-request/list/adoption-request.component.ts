@@ -1,15 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpHeaders, HttpResponse} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
-import {combineLatest} from 'rxjs';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {IAdoptionRequest} from '../adoption-request.model';
+import { IAdoptionRequest } from '../adoption-request.model';
 
-import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/config/pagination.constants';
-import {AdoptionRequestService} from '../service/adoption-request.service';
-import {AdoptionRequestDeleteDialogComponent} from '../delete/adoption-request-delete-dialog.component';
-import {map} from "rxjs/operators";
+import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
+import { AdoptionRequestService } from '../service/adoption-request.service';
+import { AdoptionRequestDeleteDialogComponent } from '../delete/adoption-request-delete-dialog.component';
 
 @Component({
   selector: 'gx-r-adoption-request',
@@ -24,15 +23,13 @@ export class AdoptionRequestComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  adoption: IAdoptionRequest | null = null;
 
   constructor(
     protected adoptionRequestService: AdoptionRequestService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected modalService: NgbModal
-  ) {
-  }
+  ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
@@ -60,31 +57,12 @@ export class AdoptionRequestComponent implements OnInit {
     this.handleNavigation();
   }
 
-  acceptRequest(id: string | undefined): void {
-    if (id) {
-      this.adoptionRequestService.find(id)
-        .pipe(map((res: HttpResponse<IAdoptionRequest>) => res.body ?? null))
-        .subscribe((adoptionRequest: IAdoptionRequest | null) => {
-          this.adoption = adoptionRequest
-          if (adoptionRequest){
-            adoptionRequest.approved = true;
-            this.adoptionRequestService.update(adoptionRequest)
-              .pipe(map((res: HttpResponse<IAdoptionRequest>)=> res.body ?? null))
-              .subscribe((adoptionRequest1: IAdoptionRequest | null)=>{
-               this.adoption = adoptionRequest1;
-               this.loadPage();
-              });
-          }
-        });
-    }
-  }
-
   trackId(_index: number, item: IAdoptionRequest): string {
     return item.id!;
   }
 
   delete(adoptionRequest: IAdoptionRequest): void {
-    const modalRef = this.modalService.open(AdoptionRequestDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
+    const modalRef = this.modalService.open(AdoptionRequestDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.adoptionRequest = adoptionRequest;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {

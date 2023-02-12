@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpHeaders, HttpResponse} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
-import {combineLatest} from 'rxjs';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import {IChild} from '../child.model';
+import { IChild } from '../child.model';
 
-import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/config/pagination.constants';
-import {ChildService} from '../service/child.service';
-import {ChildDeleteDialogComponent} from '../delete/child-delete-dialog.component';
-import {DataUtils} from 'app/core/util/data-util.service';
+import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
+import { ChildService } from '../service/child.service';
+import { ChildDeleteDialogComponent } from '../delete/child-delete-dialog.component';
+import { DataUtils } from 'app/core/util/data-util.service';
 
 @Component({
   selector: 'gx-r-child',
@@ -24,16 +24,14 @@ export class ChildComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  imageUrl = '';
 
   constructor(
     protected childService: ChildService,
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: DataUtils,
     protected router: Router,
-    protected modalService: NgbModal,
-  ) {
-  }
+    protected modalService: NgbModal
+  ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
@@ -59,7 +57,6 @@ export class ChildComponent implements OnInit {
 
   ngOnInit(): void {
     this.handleNavigation();
-
   }
 
   trackId(_index: number, item: IChild): string {
@@ -75,7 +72,7 @@ export class ChildComponent implements OnInit {
   }
 
   delete(child: IChild): void {
-    const modalRef = this.modalService.open(ChildDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
+    const modalRef = this.modalService.open(ChildDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.child = child;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -127,12 +124,4 @@ export class ChildComponent implements OnInit {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
   }
-
-  private createImageFromString(image: string): void {
-    if (image) {
-      this.imageUrl = 'data:image/jpeg;base64,' + image;
-    }
-  }
-
-
 }

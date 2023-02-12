@@ -19,6 +19,7 @@
       "age": "Age",
       "image": "Image",
       "gender": "Gender",
+      "status": "Status",
       "fosters": "Fosters",
       "adoptionRequest": "Adoption Request",
       "foundation": "Foundation"

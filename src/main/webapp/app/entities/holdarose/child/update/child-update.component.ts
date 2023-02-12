@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import {FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { IFoundation } from 'app/entities/holdarose/foundation/foundation.model';
 import { FoundationService } from 'app/entities/holdarose/foundation/service/foundation.service';
 import { Gender } from 'app/entities/enumerations/gender.model';
+import { Status } from 'app/entities/enumerations/status.model';
 
 @Component({
   selector: 'gx-r-child-update',
@@ -21,6 +22,7 @@ import { Gender } from 'app/entities/enumerations/gender.model';
 export class ChildUpdateComponent implements OnInit {
   isSaving = false;
   genderValues = Object.keys(Gender);
+  statusValues = Object.keys(Status);
 
   foundationsSharedCollection: IFoundation[] = [];
 
@@ -31,7 +33,8 @@ export class ChildUpdateComponent implements OnInit {
     image: [],
     imageContentType: [],
     gender: [],
-    foundation: [null, [Validators.required]],
+    status: [],
+    foundation: [],
   });
 
   constructor(
@@ -46,6 +49,7 @@ export class ChildUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ child }) => {
       this.updateForm(child);
+
       this.loadRelationshipsOptions();
     });
   }
@@ -112,6 +116,7 @@ export class ChildUpdateComponent implements OnInit {
       image: child.image,
       imageContentType: child.imageContentType,
       gender: child.gender,
+      status: child.status,
       foundation: child.foundation,
     });
 
@@ -142,6 +147,7 @@ export class ChildUpdateComponent implements OnInit {
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       gender: this.editForm.get(['gender'])!.value,
+      status: this.editForm.get(['status'])!.value,
       foundation: this.editForm.get(['foundation'])!.value,
     };
   }

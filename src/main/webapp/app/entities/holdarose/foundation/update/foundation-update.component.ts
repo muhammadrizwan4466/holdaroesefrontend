@@ -14,7 +14,6 @@ import { FoundationService } from '../service/foundation.service';
 })
 export class FoundationUpdateComponent implements OnInit {
   isSaving = false;
-  isNameValue = false;
 
   editForm = this.fb.group({
     id: [],
@@ -28,9 +27,6 @@ export class FoundationUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ foundation }) => {
-      if (this.editForm.get(['name'])?.value){
-        this.isNameValue = true;
-      }
       this.updateForm(foundation);
     });
   }

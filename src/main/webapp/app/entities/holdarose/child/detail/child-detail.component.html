@@ -33,6 +33,10 @@
         <dd>
           <span gxRTranslate="{{ 'holdaroesefrontendApp.Gender.' + child.gender }}">{{ child.gender }}</span>
         </dd>
+        <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.status">Status</span></dt>
+        <dd>
+          <span gxRTranslate="{{ 'holdaroesefrontendApp.Status.' + child.status }}">{{ child.status }}</span>
+        </dd>
         <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.foundation">Foundation</span></dt>
         <dd>
           <div *ngIf="child.foundation">
@@ -45,7 +49,7 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span gxRTranslate="entity.action.back">Back</span>
       </button>
 
-      <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="button" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span gxRTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

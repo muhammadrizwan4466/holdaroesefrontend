@@ -127,7 +127,7 @@
               [ngValue]="childOption.id === editForm.get('child')!.value?.id ? editForm.get('child')!.value : childOption"
               *ngFor="let childOption of childrenCollection; trackBy: trackChildById"
             >
-              {{ childOption.name }}
+              {{ childOption.id }}
             </option>
           </select>
         </div>

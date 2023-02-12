@@ -73,16 +73,24 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'holdaroesefrontendApp.Status.null' | translate }}</option>
+            <option *ngFor="let status of statusValues" [value]="status">{{ 'holdaroesefrontendApp.Status.' + status | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" gxRTranslate="holdaroesefrontendApp.holdaroseChild.foundation" for="field_foundation">Foundation</label>
           <select class="form-control" id="field_foundation" data-cy="foundation" name="foundation" formControlName="foundation">
             <option [ngValue]="null"></option>
             <option
               [ngValue]="
-                foundationOption.name === editForm.get('foundation')!.value?.name ? editForm.get('foundation')!.value : foundationOption
+                foundationOption.id === editForm.get('foundation')!.value?.id ? editForm.get('foundation')!.value : foundationOption
               "
               *ngFor="let foundationOption of foundationsSharedCollection; trackBy: trackFoundationById"
             >
-              {{ foundationOption.name }}
+              {{ foundationOption.id }}
             </option>
           </select>
         </div>

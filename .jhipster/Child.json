@@ -24,6 +24,11 @@
       "fieldName": "gender",
       "fieldType": "Gender",
       "fieldValues": "MALE,FEMALE,OTHER"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "AVAILABE,OCCUPIED,ADDOPTED"
     }
   ],
   "fluentMethods": true,

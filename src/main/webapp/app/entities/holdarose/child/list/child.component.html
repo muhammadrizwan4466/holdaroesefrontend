@@ -13,7 +13,6 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-child"
         [routerLink]="['/child/new']"
-        *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'"
       >
         <fa-icon icon="plus"></fa-icon>
         <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.home.createLabel"> Create a new Child </span>
@@ -30,73 +29,87 @@
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="children && children.length > 0">
-    <div class="d-flex">
-      <div *ngFor="let child of children; trackBy: trackId" class="card text-white bg-secondary mb-3 mx-2">
-        <img class="card-img-top" [src]="'data:image/jpeg;base64,'+ child.image" alt="{{ child.image }}">
-        <div class="card-header">
-          <div class="d-flex justify-content-between">
-            <h4 class="card-title" style="max-width: 130px">{{child.name}}</h4>
-            <div>
-              <div>Gender</div>
-              <h6 class="card-title">{{child.gender}}</h6>
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr gxRSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" gxRSortBy="id"><span gxRTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" gxRSortBy="name">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.name">Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="age">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.age">Age</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="image">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.image">Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="gender">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.gender">Gender</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="status">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.status">Status</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" gxRSortBy="foundation.id">
+            <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.foundation">Foundation</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let child of children; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/child', child.id, 'view']">{{ child.id }}</a>
+          </td>
+          <td>{{ child.name }}</td>
+          <td>{{ child.age }}</td>
+          <td>
+            <a *ngIf="child.image" (click)="openFile(child.image, child.imageContentType)" gxRTranslate="entity.action.open">open</a>
+            <span *ngIf="child.image">{{ child.imageContentType }}, {{ byteSize(child.image) }}</span>
+          </td>
+          <td gxRTranslate="{{ 'holdaroesefrontendApp.Gender.' + child.gender }}">{{ child.gender }}</td>
+          <td gxRTranslate="{{ 'holdaroesefrontendApp.Status.' + child.status }}">{{ child.status }}</td>
+          <td>
+            <div *ngIf="child.foundation">
+              <a [routerLink]="['/foundation', child.foundation?.id, 'view']">{{ child.foundation?.id }}</a>
             </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <div class="mt-2">
-              <div>
-                <h6 class="text-black">AGE</h6>
-                <h6>{{child.age}}</h6>
-              </div>
-              <div>
-                <h6 class="text-black">FOUNDATION</h6>
-               <h6>{{child.foundation?.name}}</h6>
-              </div>
-            </div>
-            <div>
-              <button [routerLink]="['/adoption-request/child', child.id ]" class="btn btn-info">Adopt Child</button>
-            </div>
-          </div>
-          <div class="btn-group mt-4">
-            <button type="submit" [routerLink]="['/child', child.id, 'view']" class="btn btn-info btn-sm"
-                    data-cy="entityDetailsButton">
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline" gxRTranslate="entity.action.view">View</span>
-            </button>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/child', child.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.view">View</span>
+              </button>
 
-            <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="submit" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton">
-              <fa-icon icon="pencil-alt"></fa-icon>
-              <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
-            </button>
+              <button type="submit" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
+              </button>
 
-            <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="submit" (click)="delete(child)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-              <fa-icon icon="times"></fa-icon>
-              <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
-            </button>
-          </div>
-        </div>
-      </div>
+              <button type="submit" (click)="delete(child)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="children && children.length > 0">
+    <div class="d-flex justify-content-center">
+      <gx-r-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></gx-r-item-count>
     </div>
 
-    <div *ngIf="children && children.length > 0">
-      <div class="d-flex justify-content-center">
-        <gx-r-item-count
-          [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></gx-r-item-count>
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <ngb-pagination
-          [collectionSize]="totalItems"
-          [(page)]="ngbPaginationPage"
-          [pageSize]="itemsPerPage"
-          [maxSize]="5"
-          [rotate]="true"
-          [boundaryLinks]="true"
-          (pageChange)="loadPage($event)"
-        ></ngb-pagination>
-      </div>
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
     </div>
   </div>
 </div>

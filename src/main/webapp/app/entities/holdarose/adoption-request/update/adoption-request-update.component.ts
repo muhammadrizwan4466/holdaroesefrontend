@@ -1,16 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpResponse} from '@angular/common/http';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs';
-import {finalize, map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 
-import {AdoptionRequest, IAdoptionRequest} from '../adoption-request.model';
-import {AdoptionRequestService} from '../service/adoption-request.service';
-import {IChild} from 'app/entities/holdarose/child/child.model';
-import {ChildService} from 'app/entities/holdarose/child/service/child.service';
-import {FoundationService} from "../../foundation/service/foundation.service";
-import {IFoundation} from "../../foundation/foundation.model";
+import { IAdoptionRequest, AdoptionRequest } from '../adoption-request.model';
+import { AdoptionRequestService } from '../service/adoption-request.service';
+import { IChild } from 'app/entities/holdarose/child/child.model';
+import { ChildService } from 'app/entities/holdarose/child/service/child.service';
 
 @Component({
   selector: 'gx-r-adoption-request-update',
@@ -20,9 +18,6 @@ export class AdoptionRequestUpdateComponent implements OnInit {
   isSaving = false;
 
   childrenCollection: IChild[] = [];
-  child: IChild | null = null;
-  adoption: IAdoptionRequest = {};
-  foundation: IFoundation = {};
 
   editForm = this.fb.group({
     id: [],
@@ -40,37 +35,19 @@ export class AdoptionRequestUpdateComponent implements OnInit {
     protected adoptionRequestService: AdoptionRequestService,
     protected childService: ChildService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder,
-  ) {
-  }
+    protected fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({adoptionRequest}) => {
-      if (adoptionRequest) {
-        this.getChild(adoptionRequest.id);
-      }
+    this.activatedRoute.data.subscribe(({ adoptionRequest }) => {
+      this.updateForm(adoptionRequest);
+
+      this.loadRelationshipsOptions();
     });
   }
 
-
   previousState(): void {
     window.history.back();
-  }
-
-  getChild(id: string): void {
-    this.childService.find(id)
-      .pipe(map((res: HttpResponse<IChild>) => res.body ?? null))
-      .subscribe((child: IChild | null) => {
-        this.child = child;
-        if (child?.name) {
-          if (child.foundation?.id) {
-            this.adoption.childName = child.name;
-            this.adoption.foundationName = child.foundation.name;
-            this.adoption.child = child;
-            this.updateForm(this.adoption);
-          }
-        }
-      });
   }
 
   save(): void {
@@ -79,7 +56,6 @@ export class AdoptionRequestUpdateComponent implements OnInit {
     if (adoptionRequest.id !== undefined) {
       this.subscribeToSaveResponse(this.adoptionRequestService.update(adoptionRequest));
     } else {
-      adoptionRequest.approved=false;
       this.subscribeToSaveResponse(this.adoptionRequestService.create(adoptionRequest));
     }
   }
@@ -119,13 +95,13 @@ export class AdoptionRequestUpdateComponent implements OnInit {
       foundationName: adoptionRequest.foundationName,
       child: adoptionRequest.child,
     });
-    this.childrenCollection = this.childService.addChildToCollectionIfMissing(this.childrenCollection, adoptionRequest.child)
 
+    this.childrenCollection = this.childService.addChildToCollectionIfMissing(this.childrenCollection, adoptionRequest.child);
   }
 
   protected loadRelationshipsOptions(): void {
     this.childService
-      .query({filter: 'adoptionrequest-is-null'})
+      .query({ filter: 'adoptionrequest-is-null' })
       .pipe(map((res: HttpResponse<IChild[]>) => res.body ?? []))
       .pipe(map((children: IChild[]) => this.childService.addChildToCollectionIfMissing(children, this.editForm.get('child')!.value)))
       .subscribe((children: IChild[]) => (this.childrenCollection = children));

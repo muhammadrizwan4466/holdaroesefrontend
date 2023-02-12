@@ -7,6 +7,16 @@
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.home.refreshListLabel">Refresh List</span>
       </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-adoption-request"
+        [routerLink]="['/adoption-request/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span gxRTranslate="holdaroesefrontendApp.holdaroseAdoptionRequest.home.createLabel"> Create a new Adoption Request </span>
+      </button>
     </div>
   </h2>
 
@@ -85,22 +95,17 @@
 
               <button
                 type="submit"
+                [routerLink]="['/adoption-request', adoptionRequest.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
-                (click)="acceptRequest(adoptionRequest.id)"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" gxRTranslate="entity.action.accept">Accept</span>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button
-                type="submit"
-                (click)="delete(adoptionRequest)"
-                class="btn btn-danger btn-sm"
-                data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(adoptionRequest)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline"
-                      gxRTranslate="entity.action.reject">Reject</span>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

@@ -43,7 +43,7 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-            <li  *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'">
+            <li>
               <a
                 class="dropdown-item"
                 routerLink="adoption-request"
@@ -67,7 +67,7 @@
                 <span gxRTranslate="global.menu.entities.holdaroseChild">Child</span>
               </a>
             </li>
-            <li *gxRHasAnyAuthority="['ROLE_USER','ROLE_FOUNDATION_ADMIN']">
+            <li>
               <a
                 class="dropdown-item"
                 routerLink="donation"
@@ -79,7 +79,7 @@
                 <span gxRTranslate="global.menu.entities.holdaroseDonation">Donation</span>
               </a>
             </li>
-            <li *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'">
+            <li>
               <a
                 class="dropdown-item"
                 routerLink="fosters"
@@ -91,7 +91,7 @@
                 <span gxRTranslate="global.menu.entities.holdaroseFosters">Fosters</span>
               </a>
             </li>
-            <li *gxRHasAnyAuthority="['ROLE_ADMIN','ROLE_FOUNDATION_ADMIN']">
+            <li>
               <a
                 class="dropdown-item"
                 routerLink="foundation"
