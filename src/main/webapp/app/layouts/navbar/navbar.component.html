@@ -3,7 +3,6 @@
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
       <span gxRTranslate="global.title" class="navbar-title">Holdaroesefrontend</span>
-      <span class="navbar-version">{{ version }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -25,6 +24,17 @@
               <fa-icon icon="home"></fa-icon>
               <span gxRTranslate="global.menu.home">Home</span>
             </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a
+            class="nav-link"
+            routerLink="child"
+            routerLinkActive="active"
+            (click)="collapseNavbar()"
+          >
+            <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+            <span gxRTranslate="global.menu.entities.holdaroseChild">Child</span>
           </a>
         </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
@@ -53,18 +63,6 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span gxRTranslate="global.menu.entities.holdaroseAdoptionRequest">Adoption Request</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="child"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span gxRTranslate="global.menu.entities.holdaroseChild">Child</span>
               </a>
             </li>
             <li *gxRHasAnyAuthority="['ROLE_USER','ROLE_FOUNDATION_ADMIN']">
