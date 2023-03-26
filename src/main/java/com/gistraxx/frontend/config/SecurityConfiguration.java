@@ -109,6 +109,9 @@ public class SecurityConfiguration {
             .pathMatchers("/services/*/*.js").permitAll()
             .pathMatchers("/services/*/*.js.map").permitAll()
             .pathMatchers("/services/*/v3/api-docs").hasAuthority(AuthoritiesConstants.ADMIN)
+            .pathMatchers("/services/holdarose/api/children/**").permitAll()
+            .pathMatchers("/services/holdarose/api/adoption-requests/**").permitAll()
+            .pathMatchers("/services/holdarose/api/donations/**").permitAll()
             .pathMatchers("/services/**").authenticated()
             .pathMatchers("/management/health").permitAll()
             .pathMatchers("/management/health/**").permitAll()
@@ -116,7 +119,7 @@ public class SecurityConfiguration {
             .pathMatchers("/management/prometheus").permitAll()
             .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
 
-        http.oauth2Login(oauth2 -> oauth2.authorizationRequestResolver(authorizationRequestResolver(this.clientRegistrationRepository)))            
+        http.oauth2Login(oauth2 -> oauth2.authorizationRequestResolver(authorizationRequestResolver(this.clientRegistrationRepository)))
             .oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(jwtAuthenticationConverter());

@@ -25,17 +25,21 @@
 
   <gx-r-alert></gx-r-alert>
 
-  <div class="alert alert-warning" id="no-result" *ngIf="children?.length === 0">
+  <div class="alert alert-warning border border-bottom-2" id="no-result" *ngIf="children?.length === 0">
     <span gxRTranslate="holdaroesefrontendApp.holdaroseChild.home.notFound">No children found</span>
   </div>
-
-  <div class="table-responsive" id="entities" *ngIf="children && children.length > 0">
-    <div class="d-flex">
-      <div *ngFor="let child of children; trackBy: trackId" class="card text-white bg-secondary mb-3 mx-2">
+  <hr>
+  <div class="d-flex" id="entities" *ngIf="children && children.length > 0">
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let child of children; trackBy: trackId" style="width: 20rem"
+           class="card text-white bg-secondary mb-3 mx-3">
         <img class="card-img-top" [src]="'data:image/jpeg;base64,'+ child.image" alt="{{ child.image }}">
         <div class="card-header">
           <div class="d-flex justify-content-between">
-            <h4 class="card-title" style="max-width: 130px">{{child.name}}</h4>
+            <div>
+              <div>Child Name</div>
+              <h6 class="card-title">{{child.name}}</h6>
+            </div>
             <div>
               <div>Gender</div>
               <h6 class="card-title">{{child.gender}}</h6>
@@ -43,60 +47,70 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <div class="mt-2">
-              <div>
+          <div class="row">
+            <div class="d-flex justify-content-between">
+              <div class="text-center">
+                <h6 class="text-black">Status</h6>
+                <h6>{{child.status}}</h6>
+              </div>
+              <div class="text-center">
                 <h6 class="text-black">AGE</h6>
                 <h6>{{child.age}}</h6>
               </div>
-              <div>
+              <div class="text-center">
                 <h6 class="text-black">FOUNDATION</h6>
-               <h6>{{child.foundation?.name}}</h6>
+                <h6>{{child.foundation?.name}}</h6>
               </div>
             </div>
-            <div>
-              <button [routerLink]="['/adoption-request/child', child.id ]" class="btn btn-info">Adopt Child</button>
+          </div>
+          <div class="row">
+            <div class="d-flex flex-column justify-content-between mt-1">
+              <span class="w-100" *ngIf="child.status=== 'AVAILABLE'">
+              <button *gxRHasAnyAuthority="'ROLE_GUEST'" [routerLink]="['/adoption-request/child', child.id ]"
+                      class="btn btn-primary mb-1 w-100">Adopt Child
+              </button>
+              </span>
+              <button type="submit" [routerLink]="['/child', child.id, 'view']" class="btn btn-info btn mb-1"
+                      data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.view">View</span>
+              </button>
+
+              <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="submit"
+                      [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary btn mb-1"
+                      data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="submit" (click)="delete(child)"
+                      class="btn btn-danger btn mb-1" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
+              </button>
             </div>
           </div>
-          <div class="btn-group mt-4">
-            <button type="submit" [routerLink]="['/child', child.id, 'view']" class="btn btn-info btn-sm"
-                    data-cy="entityDetailsButton">
-              <fa-icon icon="eye"></fa-icon>
-              <span class="d-none d-md-inline" gxRTranslate="entity.action.view">View</span>
-            </button>
 
-            <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="submit" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton">
-              <fa-icon icon="pencil-alt"></fa-icon>
-              <span class="d-none d-md-inline" gxRTranslate="entity.action.edit">Edit</span>
-            </button>
-
-            <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="submit" (click)="delete(child)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-              <fa-icon icon="times"></fa-icon>
-              <span class="d-none d-md-inline" gxRTranslate="entity.action.delete">Delete</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="children && children.length > 0">
+    <div class="d-flex justify-content-center">
+      <gx-r-item-count
+        [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></gx-r-item-count>
+    </div>
 
-    <div *ngIf="children && children.length > 0">
-      <div class="d-flex justify-content-center">
-        <gx-r-item-count
-          [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></gx-r-item-count>
-      </div>
-
-      <div class="d-flex justify-content-center">
-        <ngb-pagination
-          [collectionSize]="totalItems"
-          [(page)]="ngbPaginationPage"
-          [pageSize]="itemsPerPage"
-          [maxSize]="5"
-          [rotate]="true"
-          [boundaryLinks]="true"
-          (pageChange)="loadPage($event)"
-        ></ngb-pagination>
-      </div>
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
     </div>
   </div>
 </div>

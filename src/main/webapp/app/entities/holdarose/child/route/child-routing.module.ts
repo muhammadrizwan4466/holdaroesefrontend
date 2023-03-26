@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { ChildComponent } from '../list/child.component';
-import { ChildDetailComponent } from '../detail/child-detail.component';
-import { ChildUpdateComponent } from '../update/child-update.component';
-import { ChildRoutingResolveService } from './child-routing-resolve.service';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ChildComponent} from '../list/child.component';
+import {ChildDetailComponent} from '../detail/child-detail.component';
+import {ChildUpdateComponent} from '../update/child-update.component';
+import {ChildRoutingResolveService} from './child-routing-resolve.service';
 
 const childRoute: Routes = [
   {
@@ -14,31 +12,27 @@ const childRoute: Routes = [
     data: {
       defaultSort: 'id,asc',
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
     component: ChildDetailComponent,
     resolve: {
       child: ChildRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
+    }
   },
   {
     path: 'new',
     component: ChildUpdateComponent,
     resolve: {
       child: ChildRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
+    }
   },
   {
     path: ':id/edit',
     component: ChildUpdateComponent,
     resolve: {
       child: ChildRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
+    }
   },
 ];
 

@@ -1,73 +1,104 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
-  </div>
+<!--<div class="row">-->
+<!--  <div class="col-md-3">-->
+<!--    <span class="hipster img-fluid rounded"></span>-->
+<!--  </div>-->
 
-  <div class="col-md-9">
-    <h1 class="display-4"><span gxRTranslate="home.title">Welcome, Java Hipster!</span> (Holdaroesefrontend)</h1>
+<!--  <div class="col-md-9">-->
+<!--    <h1 class="display-4"><span gxRTranslate="home.title">Welcome, Java Hipster!</span> (Holdaroesefrontend)</h1>-->
 
-    <p class="lead" gxRTranslate="home.subtitle">This is your homepage</p>
+<!--    <p class="lead" gxRTranslate="home.subtitle">This is your homepage</p>-->
 
-    <div [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" gxRTranslate="home.logged.message" [translateValues]="{ username: account.login }"
-          >You are logged in as user "{{ account.login }}".</span
-        >
-      </div>
+<!--    <div [ngSwitch]="account !== null">-->
+<!--      <div class="alert alert-success" *ngSwitchCase="true">-->
+<!--        <span id="home-logged-message" *ngIf="account" gxRTranslate="home.logged.message" [translateValues]="{ username: account.login }"-->
+<!--          >You are logged in as user "{{ account.login }}".</span-->
+<!--        >-->
+<!--      </div>-->
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span gxRTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-        <a class="alert-link" (click)="login()" gxRTranslate="global.messages.info.authenticated.link">sign in</a
-        ><span gxRTranslate="global.messages.info.authenticated.suffix"
-          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-          password="user").</span
-        >
-      </div>
+<!--      <div class="alert alert-warning" *ngSwitchCase="false">-->
+<!--        <span gxRTranslate="global.messages.info.authenticated.prefix">If you want to </span>-->
+<!--        <a class="alert-link" (click)="login()" gxRTranslate="global.messages.info.authenticated.link">sign in</a-->
+<!--        ><span gxRTranslate="global.messages.info.authenticated.suffix"-->
+<!--          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and-->
+<!--          password="user").</span-->
+<!--        >-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <p gxRTranslate="home.question">If you have any question on JHipster:</p>-->
+
+<!--    <ul>-->
+<!--      <li>-->
+<!--        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" gxRTranslate="home.link.homepage"-->
+<!--          >JHipster homepage</a-->
+<!--        >-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a-->
+<!--          href="https://stackoverflow.com/tags/jhipster/info"-->
+<!--          target="_blank"-->
+<!--          rel="noopener noreferrer"-->
+<!--          gxRTranslate="home.link.stackoverflow"-->
+<!--          >JHipster on Stack Overflow</a-->
+<!--        >-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a-->
+<!--          href="https://github.com/jhipster/generator-jhipster/issues?state=open"-->
+<!--          target="_blank"-->
+<!--          rel="noopener noreferrer"-->
+<!--          gxRTranslate="home.link.bugtracker"-->
+<!--          >JHipster bug tracker</a-->
+<!--        >-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" gxRTranslate="home.link.chat"-->
+<!--          >JHipster public chat room</a-->
+<!--        >-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" gxRTranslate="home.link.follow"-->
+<!--          >follow @jhipster on Twitter</a-->
+<!--        >-->
+<!--      </li>-->
+<!--    </ul>-->
+
+<!--    <p>-->
+<!--      <span gxRTranslate="home.like">If you like JHipster, don't forget to give us a star on</span>-->
+<!--      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" gxRTranslate="home.github"-->
+<!--        >GitHub</a-->
+<!--      >!-->
+<!--    </p>-->
+<!--  </div>-->
+<!--</div>-->
+<ngb-carousel *ngIf="images">
+  <ng-template ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img [src]="images[0]" alt="Random first slide" />
     </div>
+    <div class="carousel-caption">
+      <h3>First slide label</h3>
+      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img [src]="images[1]" alt="Random second slide" />
+    </div>
+    <div class="carousel-caption">
+      <h3>Second slide label</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img [src]="images[2]" alt="Random third slide" />
+    </div>
+    <div class="carousel-caption">
+      <h3>Third slide label</h3>
+      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
 
-    <p gxRTranslate="home.question">If you have any question on JHipster:</p>
 
-    <ul>
-      <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" gxRTranslate="home.link.homepage"
-          >JHipster homepage</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/tags/jhipster/info"
-          target="_blank"
-          rel="noopener noreferrer"
-          gxRTranslate="home.link.stackoverflow"
-          >JHipster on Stack Overflow</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-          target="_blank"
-          rel="noopener noreferrer"
-          gxRTranslate="home.link.bugtracker"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" gxRTranslate="home.link.chat"
-          >JHipster public chat room</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" gxRTranslate="home.link.follow"
-          >follow @jhipster on Twitter</a
-        >
-      </li>
-    </ul>
-
-    <p>
-      <span gxRTranslate="home.like">If you like JHipster, don't forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" gxRTranslate="home.github"
-        >GitHub</a
-      >!
-    </p>
-  </div>
-</div>

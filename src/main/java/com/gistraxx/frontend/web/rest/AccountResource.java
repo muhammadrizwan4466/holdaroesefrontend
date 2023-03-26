@@ -50,7 +50,7 @@ public class AccountResource {
         if (principal instanceof AbstractAuthenticationToken) {
             return userService.getUserFromAuthentication((AbstractAuthenticationToken) principal);
         } else {
-            throw new AccountResourceException("User could not be found");
+            return null;
         }
     }
 

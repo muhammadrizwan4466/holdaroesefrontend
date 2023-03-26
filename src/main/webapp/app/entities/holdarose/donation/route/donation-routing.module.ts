@@ -14,7 +14,6 @@ const donationRoute: Routes = [
     data: {
       defaultSort: 'id,asc',
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
@@ -30,7 +29,6 @@ const donationRoute: Routes = [
     resolve: {
       donation: DonationRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',

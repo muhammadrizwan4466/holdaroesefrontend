@@ -12,6 +12,8 @@ import { Account } from 'app/core/auth/account.model';
 export class HomeComponent implements OnInit {
   account: Account | null = null;
 
+  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/1580/500`);
+
   constructor(private accountService: AccountService, private loginService: LoginService) {}
 
   ngOnInit(): void {

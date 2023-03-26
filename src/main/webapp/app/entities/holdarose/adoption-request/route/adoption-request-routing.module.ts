@@ -15,7 +15,6 @@ const adoptionRequestRoute: Routes = [
     data: {
       defaultSort: 'id,asc',
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
@@ -23,7 +22,6 @@ const adoptionRequestRoute: Routes = [
     resolve: {
       adoptionRequest: AdoptionRequestRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
@@ -31,7 +29,6 @@ const adoptionRequestRoute: Routes = [
     resolve: {
       adoptionRequest: AdoptionRequestRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: 'child/:id',
@@ -39,7 +36,6 @@ const adoptionRequestRoute: Routes = [
     resolve: {
       adoptionRequest: ChildRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
@@ -47,7 +43,6 @@ const adoptionRequestRoute: Routes = [
     resolve: {
       adoptionRequest: AdoptionRequestRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
   },
 ];
 

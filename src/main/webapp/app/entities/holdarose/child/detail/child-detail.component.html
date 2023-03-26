@@ -1,9 +1,10 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="child">
-      <h2 data-cy="childDetailsHeading"><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.detail.title">Child</span></h2>
+      <h2 data-cy="childDetailsHeading"><span
+        gxRTranslate="holdaroesefrontendApp.holdaroseChild.detail.title">Child</span></h2>
 
-      <hr />
+      <hr/>
 
       <gx-r-alert-error></gx-r-alert-error>
 
@@ -35,8 +36,15 @@
         </dd>
         <dt><span gxRTranslate="holdaroesefrontendApp.holdaroseChild.foundation">Foundation</span></dt>
         <dd>
-          <div *ngIf="child.foundation">
-            <a [routerLink]="['/foundation', child.foundation?.id, 'view']">{{ child.foundation?.id }}</a>
+          <div *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'">
+            <div *ngIf="child.foundation">
+              <a [routerLink]="['/foundation', child.foundation?.id, 'view']">{{ child.foundation?.id }}</a>
+            </div>
+          </div>
+          <div *gxRHasAnyAuthority="['ROLE_GUEST_USER', 'ROLE_ADMIN']">
+            <div *ngIf="child.foundation">
+              <span>{{ child.foundation.name }}</span>
+            </div>
           </div>
         </dd>
       </dl>
@@ -45,7 +53,8 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span gxRTranslate="entity.action.back">Back</span>
       </button>
 
-      <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="button" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary">
+      <button *gxRHasAnyAuthority="'ROLE_FOUNDATION_ADMIN'" type="button" [routerLink]="['/child', child.id, 'edit']"
+              class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span gxRTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
